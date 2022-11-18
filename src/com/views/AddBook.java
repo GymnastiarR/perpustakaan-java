@@ -83,7 +83,7 @@ public class AddBook extends Canvas{
         uploadImage.setBounds(480, 450, 130, 40);
 
         JButton newBook = new JButton("Tambah Buku");
-        newBook.setBounds(30, (int) fSynopsis.getY() + 500, 200, 50);
+        newBook.setBounds(130, (int) fSynopsis.getY() + 500, 200, 50);
         newBook.setBackground(Color.DARK_GRAY);
         newBook.setForeground(Color.white);
 

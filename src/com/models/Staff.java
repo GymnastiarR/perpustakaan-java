@@ -1,16 +1,15 @@
-//package com.models;
+package com.models;
 
 import com.queryBuilder.QueryBuilder;
 
-import java.sql.ResultSet;
 
-//public class Staff extends QueryBuilder {
-//    Staff(){
-//        super();
-//    }
+public class Staff extends QueryBuilder {
 
-//    @Override
-//    public String getAll() {
-//
-//    }
-//}
+    private static String model = "staff";
+    public String data = "";
+
+    public Staff(){
+        super(model);
+    }
+
+}

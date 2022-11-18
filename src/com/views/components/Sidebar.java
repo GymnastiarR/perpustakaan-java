@@ -1,9 +1,11 @@
 package com.views.components;
 import com.controller.AddBookController;
+import com.controller.BorrowController;
 import com.controller.ListViewController;
 import com.models.Books;
 import com.views.AddBook;
 import com.views.ListBooks;
+import com.views.PeminjamanBuku;
 import com.views.elementFactory.MenuButton;
 
 import javax.swing.*;
@@ -25,9 +27,13 @@ public class Sidebar{
 //        AddBookController ab = new AddBookController();
         MenuButton addBookMenu = new MenuButton(40, "Tambah Buku", AddBookController.display());
         MenuButton listBookMenu = new MenuButton(80, "List Buku", ListViewController.display());
+        MenuButton pinjamBook = new MenuButton(120, "Peminjaman Buku", BorrowController.display());
+        MenuButton ListPinjamBook = new MenuButton(160, "List Pinjam", BorrowController.display());
 
         panel.add(addBookMenu);
         panel.add(listBookMenu);
+        panel.add(pinjamBook);
+        panel.add(ListPinjamBook);
         return panel;
     }
 
