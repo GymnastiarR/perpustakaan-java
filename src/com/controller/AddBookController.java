@@ -27,10 +27,13 @@ public class AddBookController {
         return view.display();
     }
 
-    public static void setNewBook(String title, String synopsis){
+    public static void setNewBook(String title, String synopsis, String penulis, String tanggal_terbit){
         Books newBook = new Books();
         newBook.values.put("name", title);
         newBook.values.put("synopsis", synopsis);
+        newBook.values.put("penulis", penulis);
+        newBook.values.put("tanggal_terbit", tanggal_terbit);
+
         newBook.add();
     }
 

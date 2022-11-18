@@ -31,6 +31,11 @@ public class BookMigration extends Migration{
         penulis.size = 255;
         fields.addLast(penulis);
 
+        Field tanggal_terbit = new Field();
+        tanggal_terbit.name = "tanggal_terbit";
+        tanggal_terbit.type = "date";
+        fields.addLast(tanggal_terbit);
+
 
 //        for (Field x : fields){
 //            System.out.println(x.name);

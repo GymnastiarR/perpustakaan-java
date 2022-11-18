@@ -24,9 +24,14 @@ abstract public class Migration{
 
       while (it.hasNext()){
         Field field = (Field) it.next();
-        query = "ALTER TABLE " + tableName + " ADD " + field.name + " " + field.type + "(" +  field.size + ");";
-        stmt.executeUpdate(query);
-//        System.out.println(field.name);
+
+        if(!field.type.equals("date")){
+          query = "ALTER TABLE " + tableName + " ADD " + field.name + " " + field.type + "(" +  field.size + ");";
+          stmt.executeUpdate(query);
+        }else {
+          query = "ALTER TABLE " + tableName + " ADD " + field.name + " " + field.type + ";";
+          stmt.executeUpdate(query);
+        }
       }
     }catch (Exception e){
       e.printStackTrace();
