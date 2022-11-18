@@ -1,40 +1,33 @@
 package com.views.components;
 import com.controller.AddBookController;
-import com.controller.Controller;
 import com.controller.ListViewController;
+import com.models.Books;
+import com.views.AddBook;
 import com.views.ListBooks;
+import com.views.elementFactory.MenuButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.ResultSet;
 
-public class Sidebar extends JFrame{
+public class Sidebar{
 
     public JPanel display(){
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 300, 1080);
-        panel.setBackground(new Color(0,0,0,50));
+        panel.setBackground(new Color(47,47,47));
         panel.setLayout(null);
 
-        JButton listBookDisplay = new JButton("List Book");
-        listBookDisplay.setBounds(20, 20, 200, 40);
-        listBookDisplay.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Controller.ListBookController(true);
-//                try {
-////                    long start = System.currentTimeMillis();
-//                    Thread.sleep(200);
-//                }catch (InterruptedException a){
-//                    a.printStackTrace();
-//                }
-//                Controller.addBookController();
-                Controller.addBookController(false);
-            }
-        });
+//        AddBookController ab = new AddBookController();
+        MenuButton addBookMenu = new MenuButton(40, "Tambah Buku", AddBookController.display());
+        MenuButton listBookMenu = new MenuButton(80, "List Buku", ListViewController.display());
 
-        panel.add(listBookDisplay);
+        panel.add(addBookMenu);
+        panel.add(listBookMenu);
         return panel;
     }
 

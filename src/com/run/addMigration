@@ -4,9 +4,14 @@ touch $1'Migration'.java
 
 echo '
 package com.factory;
+import java.util.LinkedList;
 public class '$1'Migration extends Migration{
+
+    public static LinkedList<Field> fields = new LinkedList<>();
+
+
   '$1'Migration (){
-      super("'$1'");
+      super("'$1'", fields);
   }
 
   @Override

@@ -28,6 +28,6 @@ public class MainMigration {
         dropTable();
         BookMigration book = new BookMigration();
         StaffMigration staff = new StaffMigration();
-        PengunjungMigration pengunjung = new PengunjungMigration();
+//        PengunjungMigration pengunjung = new PengunjungMigration();
     }
 }

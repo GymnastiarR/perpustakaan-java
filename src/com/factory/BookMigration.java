@@ -20,10 +20,16 @@ public class BookMigration extends Migration{
         fields.addLast(bookName);
 
         Field bookGenre = new Field();
-        bookGenre.name = "genre";
+        bookGenre.name = "synopsis";
         bookGenre.type = "varchar";
         bookGenre.size = 255;
         fields.addLast(bookGenre);
+
+        Field penulis = new Field();
+        penulis.name = "penulis";
+        penulis.type = "varchar";
+        penulis.size = 255;
+        fields.addLast(penulis);
 
 
 //        for (Field x : fields){

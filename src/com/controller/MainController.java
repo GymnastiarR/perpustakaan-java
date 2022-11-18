@@ -1,7 +1,6 @@
 package com.controller;
 
 import com.views.AddBook;
-import com.views.components.NewFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +32,6 @@ public class MainController{
         pn.add(label);
         pn.setBounds(0, 0, 300, 1080);
         pn.setBackground(Color.DARK_GRAY);
-
 
         fr.add(pn);
         fr.setVisible(true);
