@@ -11,4 +11,12 @@ public class TextField extends JTextField{
                 getBorder(),
                 BorderFactory.createEmptyBorder(3, 5, 3, 5)));
     }
+
+    public TextField(int x, int y){
+        setBounds(x, y, 400, 33);
+        setFont(new Font("Poppins", Font.PLAIN, 14));
+        setBorder(BorderFactory.createCompoundBorder(
+                getBorder(),
+                BorderFactory.createEmptyBorder(3, 5, 3, 5)));
+    }
 }

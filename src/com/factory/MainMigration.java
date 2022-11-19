@@ -27,7 +27,6 @@ public class MainMigration {
     public static void main(String[] args) {
         dropTable();
         BookMigration book = new BookMigration();
-        StaffMigration staff = new StaffMigration();
-//        PengunjungMigration pengunjung = new PengunjungMigration();
+        PeminjamanMigration peminjam = new PeminjamanMigration();
     }
 }

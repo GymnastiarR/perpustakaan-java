@@ -14,6 +14,7 @@ public abstract class QueryBuilder{
     private ResultSet rs;
     private String model;
     public Hashtable<String, String> values = new Hashtable<>();
+//    public Hashtable<String, String> values = new Hashtable<>();
     private Vector<String> fieldList = new Vector<>();
 
 

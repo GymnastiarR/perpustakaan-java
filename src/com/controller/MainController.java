@@ -7,16 +7,6 @@ import java.awt.*;
 
 public class MainController{
 
-//    public MainController(){
-//        super("Perpustakaan Ku");
-//        add();
-//    }
-
-//    public void display(){
-//        AddBook bookView = new AddBook();
-//        add(bookView.display());
-//        setVisible(true);
-//    }
     static JFrame fr = new JFrame();
     public static void main(String[] args) {
         fr.setSize(1920, 1080);

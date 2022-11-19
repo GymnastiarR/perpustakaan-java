@@ -1,98 +1,98 @@
 package com.views;
 
-import com.controller.AddBookController;
-import com.font.Poppins;
+import com.controller.BorrowController;
+import com.models.Peminjaman;
+import com.toedter.calendar.JDateChooser;
+import com.views.elementFactory.Label;
+import com.views.elementFactory.TextField;
+import com.views.rules.Format;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
-public class PeminjamanBuku extends Canvas{
+public class PeminjamanBuku implements Format{
+
+    private int xAxisPengembalian = 550;
+    private int xAxisPeminjaman = 40;
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     public JPanel display() {
         JPanel contain = new JPanel();
         contain.setBounds(300,40,1620, 1040);
         contain.setLayout(null);
 
         JLabel label = new JLabel("Peminjaman Buku");
-        label.setBounds(470, 40, 400, 40);
+        label.setBounds(30, 40, 400, 40);
         label.setFont(new Font("Poppins", Font.BOLD, 30));
 
-        JLabel IdTransaksi = new JLabel("ID Transaksi");
-        IdTransaksi.setBounds(30, 110 , 300, 30);
-        IdTransaksi.setFont(new Font("Poppins", Font.PLAIN, 20));
+        Label idBookPeminjaman = new Label(110, "ID Buku");
+        TextField fIdBookPeminjaman = new TextField(145);
 
-        JTextField fIdTransaksi = new JTextField();
-        fIdTransaksi.setBounds(30, 145 , 400, 33);
-        fIdTransaksi.setFont(new Font("Poppins", Font.PLAIN, 14));
-        fIdTransaksi.setBorder(BorderFactory.createCompoundBorder(
-                fIdTransaksi.getBorder(),
-                BorderFactory.createEmptyBorder(3, 5, 3, 5)));
+        Label idPeminjam = new Label(205, "ID Peminjam");
+        TextField fIdPeminjam = new TextField(240);
 
-        JLabel IdBook = new JLabel("ID Buku");
-        IdBook.setBounds(30, 205 , 300, 30);
-        IdBook.setFont(new Font("Poppins", Font.PLAIN, 20));
-
-        JTextField AddId = new JTextField();
-        AddId.setBounds(30, 240 , 400, 33);
-        AddId.setFont(new Font("Poppins", Font.PLAIN, 14));
-        AddId.setBorder(BorderFactory.createCompoundBorder(
-                AddId.getBorder(),
-                BorderFactory.createEmptyBorder(3, 5, 3, 5)));
-
-        JLabel namaPeminjam = new JLabel("ID Peminjam");
-        namaPeminjam.setBounds(30, 300 , 300, 30);
-        namaPeminjam.setFont(new Font("Poppins", Font.PLAIN, 20));
-
-        JTextField AddPeminjam = new JTextField();
-        AddPeminjam.setBounds(30, 335 , 400, 33);
-        AddPeminjam.setFont(new Font("Poppins", Font.PLAIN, 14));
-        AddPeminjam.setBorder(BorderFactory.createCompoundBorder(
-                AddPeminjam.getBorder(),
-                BorderFactory.createEmptyBorder(3, 5, 3, 5)));
-
-        JLabel tanggalPinjam = new JLabel("Tanggal Pinjam");
-        tanggalPinjam.setBounds(30, 395 , 300, 30);
-        tanggalPinjam.setFont(new Font("Poppins", Font.PLAIN, 20));
-
-        JTextField ftanggalPinjam = new JTextField();
-        ftanggalPinjam.setBounds(30, 430 , 400, 33);
-        ftanggalPinjam.setFont(new Font("Poppins", Font.PLAIN, 14));
-        ftanggalPinjam.setBorder(BorderFactory.createCompoundBorder(
-                ftanggalPinjam.getBorder(),
-                BorderFactory.createEmptyBorder(3, 5, 3, 5)));
-
-        JLabel tanggalReturn = new JLabel("Tanggal Pengembalian");
-        tanggalReturn.setBounds(30, 490 , 300, 30);
-        tanggalReturn.setFont(new Font("Poppins", Font.PLAIN, 20));
-
-        JTextField ftanggalReturn = new JTextField();
-        ftanggalReturn.setBounds(30, 525 , 400, 33);
-        ftanggalReturn.setFont(new Font("Poppins", Font.PLAIN, 14));
-        ftanggalReturn.setBorder(BorderFactory.createCompoundBorder(
-                ftanggalReturn.getBorder(),
-                BorderFactory.createEmptyBorder(3, 5, 3, 5)));
+        Label tanggalPeminjaman = new Label(300, "Tanggal Pinjam");
+        JDateChooser dateChooser = new JDateChooser();
+        dateChooser.setDate(new Date());
+        dateChooser.setBounds(30, 335, 200, 30);
 
         JButton daftarPinjam = new JButton("Pinjam");
-        daftarPinjam.setBounds(120,625, 200, 50);
+        daftarPinjam.setBounds(30,395, 200, 50);
         daftarPinjam.setBackground(Color.DARK_GRAY);
         daftarPinjam.setForeground(Color.white);
+        daftarPinjam.addActionListener((event) -> {
+            BorrowController.setPeminjaman(fIdPeminjam.getText(), fIdBookPeminjaman.getText(), dateFormat.format(dateChooser.getDate()));
+        });
 
-        contain.add(IdBook);
-        contain.add(AddId);
+        JLabel pengembalian = new JLabel("Pengembalian Buku");
+        pengembalian.setBounds(xAxisPengembalian, 40, 400, 40);
+        pengembalian.setFont(new Font("Poppins", Font.BOLD, 30));
+
+
+        Label idBookPengembalian = new Label(xAxisPengembalian,110, "ID Buku");
+        TextField fIdBookPegembalian = new TextField(xAxisPengembalian, 145);
+
+        Label idPengembali = new Label(xAxisPengembalian, 205, "ID Peminjam");
+        TextField fIdPengembali = new TextField(xAxisPengembalian, 240);
+
+        Label tanggalPengembalian = new Label(xAxisPengembalian, 300, "Tanggal Pinjam");
+        JDateChooser dateChooserPengembalian = new JDateChooser();
+        dateChooserPengembalian.setDate(new Date());
+        dateChooserPengembalian.setBounds(xAxisPengembalian, 335, 200, 30);
+
+        JButton pengembalianButton = new JButton("Kembalikan Buku");
+        pengembalianButton.setBounds(xAxisPengembalian,395, 200, 50);
+        pengembalianButton.setBackground(Color.DARK_GRAY);
+        pengembalianButton.setForeground(Color.white);
+
+//        pengembalianButton.addActionListener((event) -> {
+//            BorrowController.setPeminjaman();
+//        });
+
+        contain.add(idBookPeminjaman);
+        contain.add(fIdBookPeminjaman);
         contain.add(label);
-        contain.add(IdTransaksi);
-        contain.add(fIdTransaksi);
+        contain.add(tanggalPeminjaman);
+        contain.add(idPeminjam);
+        contain.add(fIdPeminjam);
+        contain.add(tanggalPeminjaman);
+        contain.add(dateChooser);
+        contain.add(idBookPengembalian);
+        contain.add(fIdBookPegembalian);
+        contain.add(tanggalPengembalian);
+        contain.add(dateChooserPengembalian);
+        contain.add(idPengembali);
+        contain.add(fIdPengembali);
+        contain.add(pengembalianButton);
         contain.add(daftarPinjam);
-        contain.add(namaPeminjam);
-        contain.add(AddPeminjam);
-        contain.add(tanggalPinjam);
-        contain.add(ftanggalPinjam);
-        contain.add(tanggalReturn);
-        contain.add(ftanggalReturn);
+        contain.add(pengembalian);
 
         return contain;
     }
+
+
 }

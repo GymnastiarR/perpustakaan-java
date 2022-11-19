@@ -13,17 +13,7 @@ import java.io.IOException;
 
 public class AddBookController {
     static AddBook view = new AddBook();
-    static String path = "src/com/public/image/1655119642474.jpg";
     public static JPanel display(){
-//        ImageIcon cvr = new ImageIcon();
-//        try {
-//            BufferedImage myPicture = ImageIO.read(new File(path));
-//            ImageIcon coverBook = new ImageIcon(myPicture.getScaledInstance(300, 400, Image.SCALE_SMOOTH));
-//            cvr = coverBook;
-//            return view.display(coverBook);
-//        }catch (IOException e){
-//
-//        }
         return view.display();
     }
 

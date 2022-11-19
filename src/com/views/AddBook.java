@@ -37,7 +37,6 @@ public class AddBook implements Genre {
         //Untuk sinopsis Buku
         Label bookSynopsis = new Label(210, "Masukkan Sinopsis Buku");
 
-//        TextField fSynopsis = new TextField();
         JTextArea fSynopsis = new JTextArea();
         JScrollPane synopsis = new JScrollPane(fSynopsis);
 
@@ -97,20 +96,11 @@ public class AddBook implements Genre {
         coverDisplay.setIcon(cvr);
         coverDisplay.setBounds(480, 40, 300, 400);
 
-//        JPanel listGenre = new JPanel();
-//        listGenre.setLayout(null);
-//        listGenre.setBounds(480, uploadImage.getY() + 60, 300, 100);
-//
-//        Label labelGenre = new Label(0, 10, "Genre");
-//        listGenre.add(labelGenre);
 
         JComboBox<String> genre = new JComboBox<>(Genre.genre);
         genre.setBounds(480, uploadImage.getY() + 40, 300, 30);
         genre.setFont(new Font("Poppins", Font.PLAIN, 15));
 
-//        JButton addGenre = new JButton("Tambah Genre");
-//        addGenre.setBounds(480, genre.getY() + 40, 120, 30);
-//        addGenre.addActionListener(new AddGenre(genre));
 
         content.add(genre);
         content.add(date);

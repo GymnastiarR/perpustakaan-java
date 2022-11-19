@@ -36,10 +36,10 @@ public class BookMigration extends Migration{
         tanggal_terbit.type = "date";
         fields.addLast(tanggal_terbit);
 
-
-//        for (Field x : fields){
-//            System.out.println(x.name);
-//        }
-//        System.out.println();
+        Field stok = new Field();
+        stok.name = "stok";
+        stok.type = "int";
+        stok.size = 0;
+        fields.addLast(stok);
     }
 }

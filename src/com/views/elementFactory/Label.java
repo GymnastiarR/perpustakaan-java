@@ -19,7 +19,7 @@ public class Label extends JLabel {
 
     public Label(int x, int y, String text){
         setText(text);
-        setBounds(30, y, 400, 30);
+        setBounds( x, y, 400, 30);
         setFont(new Font("Poppins", Font.PLAIN, 20));
     }
 }
