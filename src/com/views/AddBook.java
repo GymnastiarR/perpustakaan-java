@@ -1,40 +1,22 @@
 package com.views;
 
 import com.controller.AddBookController;
-import com.font.Poppins;
 import com.toedter.calendar.JDateChooser;
-import com.views.components.Sidebar;
 import com.views.elementFactory.Label;
 import com.views.elementFactory.TextField;
+import com.views.rules.Genre;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.File;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.text.AttributedCharacterIterator;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 
-public class AddBook extends Canvas{
-    private static int labelLocaltionY = 120;
-//    JLabel coverDisplay = new JLabel( );
-    private static boolean isDisplay = true;
-
-
-    public void paintComponent(Graphics g) {
-        Toolkit t=Toolkit.getDefaultToolkit();
-        Image i=t.getImage("1655119642474.jpg");
-//        i = i.getScaledInstance(300, 400, Image.SCALE_SMOOTH);
-        g.drawImage(i, 480,40,this);
-    }
-
+public class AddBook implements Genre {
     public JPanel display(){
         JLabel coverDisplay = new JLabel();
 
@@ -49,7 +31,6 @@ public class AddBook extends Canvas{
         label.setFont(new Font("Poppins Medium", Font.BOLD, 30));
 
         //Untuk Judul Buku
-
         Label bookTitle = new Label(100, "Judul Buku");
         TextField fBookTitle = new TextField(145);
 
@@ -64,14 +45,14 @@ public class AddBook extends Canvas{
         fSynopsis.setWrapStyleWord(true);
         fSynopsis.setFont(new Font("Poppins", Font.PLAIN, 14));
 
-        synopsis.setBounds(30, (int)bookSynopsis.getY()+40, 400, 200 );
-        fSynopsis.setBounds(30, (int)bookSynopsis.getY()+40, 400, 200 );
+        synopsis.setBounds(30, bookSynopsis.getY()+40, 400, 200 );
+        fSynopsis.setBounds(30, bookSynopsis.getY()+40, 400, 200 );
         synopsis.setViewportView(fSynopsis);
 
         fSynopsis.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         //Untuk Nama Penulis
-        Label penulis = new Label((int)synopsis.getY()+240, "Penulis Buku");
+        Label penulis = new Label(synopsis.getY()+240, "Penulis Buku");
         TextField fPenulis = new TextField(penulis.getY() + 40);
 
         //Untuk Tanggal
@@ -79,11 +60,10 @@ public class AddBook extends Canvas{
 
         JDateChooser dateChooser = new JDateChooser();
         dateChooser.setBounds(30, date.getY() + 40, 200, 30);
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         //Untuk Tombol Kirim
         JButton newBook = new JButton("Tambah Buku");
-        newBook.setBounds(30, (int) dateChooser.getY() + 60, 200, 50);
+        newBook.setBounds(30, dateChooser.getY() + 60, 200, 50);
         newBook.setBackground(Color.DARK_GRAY);
         newBook.setForeground(Color.white);
 
@@ -94,44 +74,21 @@ public class AddBook extends Canvas{
         uploadImage.setFont(new Font("Poppins", Font.PLAIN, 13));
         uploadImage.setBounds(480, 450, 130, 40);
 
+        newBook.addActionListener(new SubmitBook(fPenulis, dateChooser, fBookTitle, fSynopsis));
 
-        newBook.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                AddBookController.setNewBook(fBookTitle.getText(), fSynopsis.getText(), fPenulis.getText(),format.format(dateChooser.getDate()));
-                int confirmation = JOptionPane.showConfirmDialog(null, "Yakin Ingin Menambah Buku ?",
-                        "Book Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                if(confirmation == 0){
-                    AddBookController.setNewBook(fBookTitle.getText(), fSynopsis.getText(), fPenulis.getText(), format.format(dateChooser.getDate()));
-                    fPenulis.setText("");
-                    dateChooser.setDate(null);
-                    fBookTitle.setText("");
-                    fSynopsis.setText("");
-
-                    JOptionPane.showMessageDialog(null, "Buku Sudah Tersimpan");
-                }
+        uploadImage.addActionListener((event) -> {
+            JFileChooser chooser = new JFileChooser();
+            chooser.showOpenDialog(null);
+            try {
+                File f = chooser.getSelectedFile();
+                ImageIcon imgCover = new ImageIcon(f.toString());
+                Image img = imgCover.getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH);
+                ImageIcon imgCover2 = new ImageIcon(img);
+                coverDisplay.setIcon(imgCover2);
+            } catch (NullPointerException error){
+                error.printStackTrace();
             }
         });
-
-
-        ActionListener upload = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        JFileChooser chooser = new JFileChooser();
-                        chooser.showOpenDialog(null);
-                        try {
-                            File f = chooser.getSelectedFile();
-                            ImageIcon imgCover = new ImageIcon(f.toString());
-                            Image img = imgCover.getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH);
-                            ImageIcon imgCover2 = new ImageIcon(img);
-                            coverDisplay.setIcon(imgCover2);
-                        } catch (NullPointerException error){
-                    error.printStackTrace();
-                }
-            }
-        };
-
-        uploadImage.addActionListener(upload);
 
         ImageIcon cover = new ImageIcon(this.getClass().getResource("../public/image/1655119642474.jpg"));
         Image img = cover.getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH);
@@ -140,7 +97,22 @@ public class AddBook extends Canvas{
         coverDisplay.setIcon(cvr);
         coverDisplay.setBounds(480, 40, 300, 400);
 
+//        JPanel listGenre = new JPanel();
+//        listGenre.setLayout(null);
+//        listGenre.setBounds(480, uploadImage.getY() + 60, 300, 100);
+//
+//        Label labelGenre = new Label(0, 10, "Genre");
+//        listGenre.add(labelGenre);
 
+        JComboBox<String> genre = new JComboBox<>(Genre.genre);
+        genre.setBounds(480, uploadImage.getY() + 40, 300, 30);
+        genre.setFont(new Font("Poppins", Font.PLAIN, 15));
+
+//        JButton addGenre = new JButton("Tambah Genre");
+//        addGenre.setBounds(480, genre.getY() + 40, 120, 30);
+//        addGenre.addActionListener(new AddGenre(genre));
+
+        content.add(genre);
         content.add(date);
         content.add(dateChooser);
         content.add(penulis);
@@ -155,6 +127,37 @@ public class AddBook extends Canvas{
         content.add(newBook);
 
         return content;
+    }
+
+
+    class SubmitBook implements ActionListener{
+        TextField fPenulis;
+        JDateChooser dateChooser;
+        TextField fBookTitle;
+        JTextArea fSynopsis;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+
+        SubmitBook(TextField fPenulis, JDateChooser dateChooser, TextField fBookTitle, JTextArea fSynopsis){
+            this.fPenulis = fPenulis;
+            this.dateChooser = dateChooser;
+            this.fBookTitle = fBookTitle;
+            this.fSynopsis = fSynopsis;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            int confirmation = JOptionPane.showConfirmDialog(null, "Yakin Ingin Menambah Buku ?",
+                    "Book Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if(confirmation == 0){
+                AddBookController.setNewBook(fBookTitle.getText(), fSynopsis.getText(), fPenulis.getText(), dateFormat.format(dateChooser.getDate()));
+                fPenulis.setText("");
+                dateChooser.setDate(null);
+                fBookTitle.setText("");
+                fSynopsis.setText("");
+
+                JOptionPane.showMessageDialog(null, "Buku Sudah Tersimpan");
+            }
+        }
     }
 
 }

@@ -35,7 +35,10 @@ public class MainFrame extends JFrame{
         frame.getContentPane().add(destPanel);
         frame.repaint();
         frame.revalidate();
-//        frame.setVisible(true);
-//        frame.update(frame.getGraphics());
+    }
+
+    public static void refresh(){
+        frame.repaint();
+        frame.revalidate();
     }
 }
