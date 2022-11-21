@@ -39,7 +39,6 @@ public class PeminjamanMigration extends Migration{
     tanggal_peminjaman.name = "tanggal_peminjaman";
     tanggal_peminjaman.type = "date";
     fields.add(tanggal_peminjaman);
-    //You can add another field
   }
 }
 

@@ -1,5 +1,6 @@
 package com.views;
 
+import com.controller.AddBookController;
 import com.controller.BorrowController;
 import com.models.Peminjaman;
 import com.toedter.calendar.JDateChooser;
@@ -45,7 +46,15 @@ public class PeminjamanBuku implements Format{
         daftarPinjam.setBackground(Color.DARK_GRAY);
         daftarPinjam.setForeground(Color.white);
         daftarPinjam.addActionListener((event) -> {
-            BorrowController.setPeminjaman(fIdPeminjam.getText(), fIdBookPeminjaman.getText(), dateFormat.format(dateChooser.getDate()));
+            int confirmation = JOptionPane.showConfirmDialog(null, "Yakin Ingin Meminjam Buku?",
+                    "Book Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if(confirmation == 0){
+                BorrowController.setPeminjaman(fIdPeminjam.getText(), fIdBookPeminjaman.getText(), dateFormat.format(dateChooser.getDate()));
+                fIdBookPeminjaman.setText("");
+                dateChooser.setDate(null);
+                fIdPeminjam.setText("");
+                JOptionPane.showMessageDialog(null, "Buku Dipinjam");
+            }
         });
 
         JLabel pengembalian = new JLabel("Pengembalian Buku");
@@ -68,10 +77,6 @@ public class PeminjamanBuku implements Format{
         pengembalianButton.setBounds(xAxisPengembalian,395, 200, 50);
         pengembalianButton.setBackground(Color.DARK_GRAY);
         pengembalianButton.setForeground(Color.white);
-
-//        pengembalianButton.addActionListener((event) -> {
-//            BorrowController.setPeminjaman();
-//        });
 
         contain.add(idBookPeminjaman);
         contain.add(fIdBookPeminjaman);

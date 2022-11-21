@@ -25,11 +25,11 @@ abstract public class Migration{
       while (it.hasNext()){
         Field field = (Field) it.next();
 
-        if(!field.type.equals("date")){
-          query = "ALTER TABLE " + tableName + " ADD " + field.name + " " + field.type + "(" +  field.size + ");";
+        if(field.type.equals("date") || field.type.equals("text")){
+          query = "ALTER TABLE " + tableName + " ADD " + field.name + " " + field.type + ";";
           stmt.executeUpdate(query);
         }else {
-          query = "ALTER TABLE " + tableName + " ADD " + field.name + " " + field.type + ";";
+          query = "ALTER TABLE " + tableName + " ADD " + field.name + " " + field.type + "(" +  field.size + ");";
           stmt.executeUpdate(query);
         }
       }

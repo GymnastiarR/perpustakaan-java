@@ -1,6 +1,7 @@
 package com.views;
 
 import com.controller.AddBookController;
+import com.mysql.cj.jdbc.jmx.LoadBalanceConnectionGroupManager;
 import com.toedter.calendar.JDateChooser;
 import com.views.elementFactory.Label;
 import com.views.elementFactory.TextField;
@@ -73,7 +74,6 @@ public class AddBook implements Genre {
         uploadImage.setFont(new Font("Poppins", Font.PLAIN, 13));
         uploadImage.setBounds(480, 450, 130, 40);
 
-        newBook.addActionListener(new SubmitBook(fPenulis, dateChooser, fBookTitle, fSynopsis));
 
         uploadImage.addActionListener((event) -> {
             JFileChooser chooser = new JFileChooser();
@@ -96,12 +96,23 @@ public class AddBook implements Genre {
         coverDisplay.setIcon(cvr);
         coverDisplay.setBounds(480, 40, 300, 400);
 
+        //Genre
+        Label genreTitle = new Label(480, uploadImage.getY() + 60, "Genre");
 
         JComboBox<String> genre = new JComboBox<>(Genre.genre);
-        genre.setBounds(480, uploadImage.getY() + 40, 300, 30);
+        genre.setBounds(480, genreTitle.getY() + 40, 300, 30);
         genre.setFont(new Font("Poppins", Font.PLAIN, 15));
+        genre.setSelectedItem(null);
 
+        //Stok
+        Label stokTitle = new Label(480, genre.getY() + 60, "Stok");
+        TextField stok = new TextField(480, stokTitle.getY() + 40);
 
+        newBook.addActionListener(new SubmitBook(fPenulis, dateChooser, fBookTitle, fSynopsis, genre, stok));
+
+        content.add(stokTitle);
+        content.add(stok);
+        content.add(genreTitle);
         content.add(genre);
         content.add(date);
         content.add(dateChooser);
@@ -126,24 +137,32 @@ public class AddBook implements Genre {
         TextField fBookTitle;
         JTextArea fSynopsis;
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        JComboBox<String> genre;
+        JTextField stok;
 
 
-        SubmitBook(TextField fPenulis, JDateChooser dateChooser, TextField fBookTitle, JTextArea fSynopsis){
+        SubmitBook(TextField fPenulis, JDateChooser dateChooser, TextField fBookTitle, JTextArea fSynopsis, JComboBox<String> genre,
+                   JTextField stok){
             this.fPenulis = fPenulis;
             this.dateChooser = dateChooser;
             this.fBookTitle = fBookTitle;
             this.fSynopsis = fSynopsis;
+            this.genre = genre;
+            this.stok = stok;
         }
 
         public void actionPerformed(ActionEvent e) {
             int confirmation = JOptionPane.showConfirmDialog(null, "Yakin Ingin Menambah Buku ?",
                     "Book Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if(confirmation == 0){
-                AddBookController.setNewBook(fBookTitle.getText(), fSynopsis.getText(), fPenulis.getText(), dateFormat.format(dateChooser.getDate()));
+                AddBookController.setNewBook(fBookTitle.getText(), fSynopsis.getText(), fPenulis.getText(), dateFormat.format(dateChooser.getDate()),
+                        (String) genre.getSelectedItem(), stok.getText());
                 fPenulis.setText("");
                 dateChooser.setDate(null);
                 fBookTitle.setText("");
                 fSynopsis.setText("");
+                stok.setText("");
+                genre.setSelectedItem(null);
 
                 JOptionPane.showMessageDialog(null, "Buku Sudah Tersimpan");
             }

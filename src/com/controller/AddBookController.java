@@ -17,12 +17,14 @@ public class AddBookController {
         return view.display();
     }
 
-    public static void setNewBook(String title, String synopsis, String penulis, String tanggal_terbit){
+    public static void setNewBook(String title, String synopsis, String penulis, String tanggal_terbit, String genre, String stok){
         Books newBook = new Books();
         newBook.values.put("name", title);
         newBook.values.put("synopsis", synopsis);
         newBook.values.put("penulis", penulis);
         newBook.values.put("tanggal_terbit", tanggal_terbit);
+        newBook.values.put("genre", genre);
+        newBook.values.put("stok", stok);
 
         newBook.add();
     }

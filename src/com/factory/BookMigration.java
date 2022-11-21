@@ -21,8 +21,8 @@ public class BookMigration extends Migration{
 
         Field bookGenre = new Field();
         bookGenre.name = "synopsis";
-        bookGenre.type = "varchar";
-        bookGenre.size = 255;
+        bookGenre.type = "text";
+//        bookGenre.size = 255;
         fields.addLast(bookGenre);
 
         Field penulis = new Field();
@@ -41,5 +41,11 @@ public class BookMigration extends Migration{
         stok.type = "int";
         stok.size = 0;
         fields.addLast(stok);
+
+        Field genre = new Field();
+        genre.name = "genre";
+        genre.type = "varchar";
+        genre.size = 255;
+        fields.add(genre);
     }
 }
