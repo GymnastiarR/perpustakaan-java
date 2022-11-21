@@ -40,6 +40,26 @@ public abstract class QueryBuilder{
         return rs;
     }
 
+    public ResultSet getItem(String id){
+        try {
+            String query = "SELECT * FROM " + model + " WHERE ID = " + id;
+            rs = stmt.executeQuery(query);
+//            System.out.println(rs.getString("name"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public void deleteById(String id){
+        try {
+            String query = "DELETE FROM " + model + " WHERE id = " + id + " ;";
+            stmt.executeUpdate(query);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void add(){
 
         String query = "INSERT INTO " + model + " ( ";
@@ -68,7 +88,7 @@ public abstract class QueryBuilder{
 
     public ResultSet query(String query){
         try {
-            ResultSet rs = stmt.executeQuery(query);
+            stmt.executeUpdate(query);
         }catch (Exception e){
             e.printStackTrace();
         }

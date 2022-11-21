@@ -28,5 +28,6 @@ public class MainMigration {
         dropTable();
         BookMigration book = new BookMigration();
         PeminjamanMigration peminjam = new PeminjamanMigration();
+        PengembalianMigration pengembalian = new PengembalianMigration();
     }
 }

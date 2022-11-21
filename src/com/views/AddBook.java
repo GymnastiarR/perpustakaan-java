@@ -1,7 +1,6 @@
 package com.views;
 
 import com.controller.AddBookController;
-import com.mysql.cj.jdbc.jmx.LoadBalanceConnectionGroupManager;
 import com.toedter.calendar.JDateChooser;
 import com.views.elementFactory.Label;
 import com.views.elementFactory.TextField;
@@ -13,12 +12,21 @@ import java.io.File;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.PushbackInputStream;
+import java.security.PublicKey;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class AddBook implements Genre {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     public JPanel display(){
+        return display("", "", "", "", "", "", "");
+    }
+
+    public JPanel display(String tBook, String sBook, String pBook, String gBook, String tgBook, String stBook, String id){
         JLabel coverDisplay = new JLabel();
 
         JPanel content = new JPanel();
@@ -28,17 +36,23 @@ public class AddBook implements Genre {
 
         //Title Page
         JLabel label = new JLabel("Tambah Buku Baru");
+        if (!tBook.isEmpty()){
+            label.setText("Edit Buku");
+        }
         label.setBounds(30, 30, 400, 40);
         label.setFont(new Font("Poppins Medium", Font.BOLD, 30));
 
         //Untuk Judul Buku
         Label bookTitle = new Label(100, "Judul Buku");
+//        bookTitle.setText(tBook);
         TextField fBookTitle = new TextField(145);
+        fBookTitle.setText(tBook);
 
         //Untuk sinopsis Buku
         Label bookSynopsis = new Label(210, "Masukkan Sinopsis Buku");
 
         JTextArea fSynopsis = new JTextArea();
+        fSynopsis.setText(sBook);
         JScrollPane synopsis = new JScrollPane(fSynopsis);
 
         fSynopsis.setLineWrap(true);
@@ -54,15 +68,27 @@ public class AddBook implements Genre {
         //Untuk Nama Penulis
         Label penulis = new Label(synopsis.getY()+240, "Penulis Buku");
         TextField fPenulis = new TextField(penulis.getY() + 40);
+        fPenulis.setText(pBook);
 
         //Untuk Tanggal
         Label date = new Label(fPenulis.getY() + 60, "Tanggal Penerbitan Buku");
 
         JDateChooser dateChooser = new JDateChooser();
         dateChooser.setBounds(30, date.getY() + 40, 200, 30);
+        if (!tgBook.isEmpty()){
+            try {
+                Date tmp = dateFormat.parse(tgBook);
+                dateChooser.setDate(tmp);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
 
         //Untuk Tombol Kirim
         JButton newBook = new JButton("Tambah Buku");
+        if (!tBook.isEmpty()){
+            newBook.setText("Edit Buku");
+        }
         newBook.setBounds(30, dateChooser.getY() + 60, 200, 50);
         newBook.setBackground(Color.DARK_GRAY);
         newBook.setForeground(Color.white);
@@ -89,10 +115,10 @@ public class AddBook implements Genre {
             }
         });
 
-        ImageIcon cover = new ImageIcon(this.getClass().getResource("../public/image/1655119642474.jpg"));
+        ImageIcon cover = new ImageIcon(this.getClass().getResource("../public/image/default.png"));
         Image img = cover.getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH);
         ImageIcon cvr = new ImageIcon(img);
-
+        coverDisplay.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
         coverDisplay.setIcon(cvr);
         coverDisplay.setBounds(480, 40, 300, 400);
 
@@ -103,12 +129,28 @@ public class AddBook implements Genre {
         genre.setBounds(480, genreTitle.getY() + 40, 300, 30);
         genre.setFont(new Font("Poppins", Font.PLAIN, 15));
         genre.setSelectedItem(null);
+        if (!gBook.isEmpty()){
+            genre.setSelectedItem(gBook);
+        }
 
         //Stok
         Label stokTitle = new Label(480, genre.getY() + 60, "Stok");
         TextField stok = new TextField(480, stokTitle.getY() + 40);
+        stok.setText(stBook);
 
-        newBook.addActionListener(new SubmitBook(fPenulis, dateChooser, fBookTitle, fSynopsis, genre, stok));
+        if (!gBook.isEmpty()){
+            newBook.addActionListener((event) -> {
+                int confirmation = JOptionPane.showConfirmDialog(null, "Yakin Ingin Merubah Buku ?",
+                        "Book Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if(confirmation == 0){
+                    AddBookController.editBook(fBookTitle.getText(), fSynopsis.getText(), fPenulis.getText(),
+                            dateFormat.format(dateChooser.getDate()),
+                            (String) genre.getSelectedItem(), stok.getText(), id);
+                }
+            });
+
+        }
+
 
         content.add(stokTitle);
         content.add(stok);

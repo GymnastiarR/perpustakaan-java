@@ -1,45 +1,61 @@
 package com.views;
 
+import com.views.elementFactory.ButtonEditor;
+import com.views.elementFactory.ButtonRenderer;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.ResultSet;
 
 
 public class ListBorrow extends Canvas{
-    public JPanel display() {
-        JPanel contain = new JPanel();
-        contain.setBounds(300,40,1620, 1040);
-        contain.setLayout(null);
+    public JPanel display(ResultSet rs) {
 
-        JLabel label = new JLabel("Peminjaman Buku");
-        label.setBounds(35, 40, 400, 40);
-        label.setFont(new Font("Poppins", Font.BOLD, 30));
+        JPanel content = new JPanel();
+        content.setLayout(null);
+        content.setBounds(300, 40, 1620, 1080);
+        content.setBackground(Color.white);
 
-        JLabel IdBook = new JLabel("ID Buku");
-        IdBook.setBounds(30, 110 , 300, 30);
-        IdBook.setFont(new Font("Poppins", Font.PLAIN, 20));
+        JLabel titlePage = new JLabel("List Peminjam");
+        titlePage.setFont(new Font("Poppins Medium", Font.PLAIN, 30));
+        titlePage.setBounds(40, 40, 400, 30);
+        content.add(titlePage);
 
-        JTextField AddId = new JTextField();
-        AddId.setBounds(30, 150 , 300, 30);
+        String[] dataHeader = {"ID Transaksi", "ID Buku", "ID Peminjam", "Tanggal Peminjaman"};
+        String[][] dataBook = {
+        };
 
-        JLabel namaPeminjam = new JLabel("Nama Peminjam");
-        namaPeminjam.setBounds(30, 210 , 300, 30);
-        namaPeminjam.setFont(new Font("Poppins", Font.PLAIN, 20));
+        DefaultTableModel data = new DefaultTableModel(dataBook,dataHeader);
 
-        JTextField AddPeminjam = new JTextField();
-        AddPeminjam.setBounds(30, 250 , 300, 30);
+        JTable listBooks = new JTable(data){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
-        JButton daftarPinjam = new JButton("Pinjam");
-        daftarPinjam.setBounds(70,500, 200, 50);
-        daftarPinjam.setBackground(Color.DARK_GRAY);
-        daftarPinjam.setForeground(Color.white);
+        listBooks.setRowHeight(25);
+        listBooks.setFont(new Font("Poppins", Font.PLAIN, 15));
+        listBooks.setBorder(BorderFactory.createCompoundBorder(listBooks.getBorder(),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        listBooks.getTableHeader().setFont(new Font("Poppins", Font.PLAIN, 15));
 
-        contain.add(IdBook);
-        contain.add(AddId);
-        contain.add(label);
-        contain.add(daftarPinjam);
-        contain.add(namaPeminjam);
-        contain.add(AddPeminjam);
+        JScrollPane scrollPane = new JScrollPane(listBooks);
+        scrollPane.setBounds(40, titlePage.getY() + 60, 1150, 600);
+        scrollPane.setBackground(Color.white);
 
-        return contain;
+        try {
+            while (rs.next()){
+                data.addRow(new Object[]{rs.getString("id"), rs.getString("id_buku"),
+                        rs.getString("id_peminjam"), rs.getString("tanggal_peminjaman")});
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        content.add(titlePage);
+        content.add(scrollPane);
+        return content;
     }
 }

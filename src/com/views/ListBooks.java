@@ -1,6 +1,12 @@
 package com.views;
 
+import com.views.elementFactory.ButtonEditor;
+import com.views.elementFactory.ButtonRenderer;
+import com.views.elementFactory.Label;
+
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,72 +27,41 @@ public class ListBooks{
         titlePage.setBounds(40, 40, 400, 30);
         content.add(titlePage);
 
-        JPanel listBooks = new JPanel();
-        listBooks.setBounds(40, 80, 1000,2000);
-//        listBooks.setPreferredSize(new Dimension(1000, 2000));
-//        listBooks.setLocation(40, 80);
-        listBooks.setLayout(null);
-//        listBooks.setAutoscrolls(true);
-//        listBooks.setLayout(new BoxLayout(new Container(), 1));
+        String[] dataHeader = {"Judul", "Penulis", "Genre", "Tanggal Terbit", "Stok", "Action"};
+        String[][] dataBook = {
+        };
 
 
-        JScrollPane scrollListBooks = new JScrollPane();
-        scrollListBooks.setBounds(40, 80, 1000,500);
-        scrollListBooks.setViewportView(listBooks);
-//        scrollListBooks.add(listBooks);
-        scrollListBooks.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-//        scrollListBooks.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        try{
-            while(rs.next()){
+        DefaultTableModel data = new DefaultTableModel(dataBook,dataHeader);
 
-//                JScrollPane jScrollPane = new JScrollPane();
-//                jScrollPane.setLayout(GridLayout);
-                ImageIcon cover = new ImageIcon(this.getClass().getResource("../public/image/1655119642474.jpg"));
-                Image img = cover.getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH);
-                ImageIcon cvr = new ImageIcon(img);
-                JLabel coverDisplay = new JLabel();
-                coverDisplay.setIcon(cvr);
-                coverDisplay.setBounds(20, labelLocationY + 20, 300, 400);
+        JTable listBooks = new JTable(data);
+        listBooks.getColumn("Action").setCellRenderer(new ButtonRenderer());
+        listBooks.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox()));
+//        listBooks.isCellEditable(false);
 
-                JLabel labelJudul = new JLabel(rs.getString("name"));
-                labelJudul.setBounds(350, labelLocationY+20, 300, 30);
-                labelJudul.setFont(new Font("Poppins", Font.PLAIN, 20));
+        listBooks.setRowHeight(25);
+        listBooks.setFont(new Font("Poppins", Font.PLAIN, 15));
+        listBooks.setBorder(BorderFactory.createCompoundBorder(listBooks.getBorder(),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        listBooks.getTableHeader().setFont(new Font("Poppins", Font.PLAIN, 15));
 
-                JLabel synopsis = new JLabel(rs.getString("synopsis"));
-                synopsis.setBounds( 350, (int)labelJudul.getY() + 40, 300, 300 );
-                synopsis.setFont(new Font("Poppins", Font.PLAIN, 16));
+        JScrollPane scrollPane = new JScrollPane(listBooks);
+        scrollPane.setBounds(40, titlePage.getY() + 60, 1150, 600);
+        scrollPane.setBackground(Color.white);
 
-                JButton editButton = new JButton("Edit");
-                editButton.setBounds(350, (int)synopsis.getY() + 20, 120, 30);
-                editButton.setFont(new Font("Poppins", Font.PLAIN, 16));
-                editButton.setBackground(Color.darkGray);
-                editButton.setForeground(Color.white);
-
-                int id = rs.getInt("id");
-
-                editButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        try{
-                            System.out.println(id);
-                        }catch (Exception error){
-                            error.printStackTrace();
-                        }
-                    }
-                });
-
-                labelLocationY += 600;
-                listBooks.add(coverDisplay);
-                listBooks.add(editButton);
-                listBooks.add(synopsis);
-                listBooks.add(labelJudul);
+        try {
+            while (rs.next()){
+//                JButton detail = new JButton("Edit");
+//                JLabel detail = new JLabel("Edit");
+                data.addRow(new Object[]{rs.getString("name"), rs.getString("penulis"),
+                rs.getString("genre"), rs.getString("tanggal_terbit"), rs.getString("stok"), rs.getInt("id")});
             }
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        content.add(scrollListBooks);
-
+        content.add(titlePage);
+        content.add(scrollPane);
         return content;
     }
 }
