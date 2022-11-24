@@ -14,12 +14,12 @@ import java.sql.ResultSet;
 
 public class AddBookController {
     static AddBook view = new AddBook();
-    static String title;
-    static String penulis;
-    static String synopsis;
-    static String genre;
-    static String tanggal;
-    static String stok;
+    static private String title;
+    static private String penulis;
+    static private String synopsis;
+    static private String genre;
+    static private String tanggal;
+    static private String stok;
 
     public static JPanel display(){
         return view.display();

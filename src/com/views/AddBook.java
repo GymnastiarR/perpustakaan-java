@@ -2,6 +2,7 @@ package com.views;
 
 import com.controller.AddBookController;
 import com.toedter.calendar.JDateChooser;
+import com.views.components.MainFrame;
 import com.views.elementFactory.Label;
 import com.views.elementFactory.TextField;
 import com.views.rules.Genre;
@@ -11,16 +12,20 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.*;
+import javax.swing.text.html.ImageView;
 import java.awt.*;
 import java.io.PushbackInputStream;
 import java.security.PublicKey;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class AddBook implements Genre {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    List<String> gnr = new ArrayList<>();
 
     public JPanel display(){
         return display("", "", "", "", "", "", "");
@@ -92,6 +97,7 @@ public class AddBook implements Genre {
         newBook.setBounds(30, dateChooser.getY() + 60, 200, 50);
         newBook.setBackground(Color.DARK_GRAY);
         newBook.setForeground(Color.white);
+        newBook.setFont(new Font("Poppins", Font.PLAIN, 14));
 
         //Untuk upload gambar
         JButton uploadImage = new JButton("Upload Image");
@@ -122,13 +128,17 @@ public class AddBook implements Genre {
         coverDisplay.setIcon(cvr);
         coverDisplay.setBounds(480, 40, 300, 400);
 
-        //Genre
-        Label genreTitle = new Label(480, uploadImage.getY() + 60, "Genre");
+
+        Label genreTitle = new Label(480, uploadImage.getY() + 50, "Genre");
 
         JComboBox<String> genre = new JComboBox<>(Genre.genre);
         genre.setBounds(480, genreTitle.getY() + 40, 300, 30);
         genre.setFont(new Font("Poppins", Font.PLAIN, 15));
         genre.setSelectedItem(null);
+
+//        JButton addGenre = new JButton("+");
+//        addGenre.setBounds(800, genreTitle.getY() + 50, 30, 30);
+
         if (!gBook.isEmpty()){
             genre.setSelectedItem(gBook);
         }
@@ -137,6 +147,7 @@ public class AddBook implements Genre {
         Label stokTitle = new Label(480, genre.getY() + 60, "Stok");
         TextField stok = new TextField(480, stokTitle.getY() + 40);
         stok.setText(stBook);
+
 
         if (!gBook.isEmpty()){
             newBook.addActionListener((event) -> {
@@ -149,13 +160,16 @@ public class AddBook implements Genre {
                 }
             });
 
+        }else{
+            newBook.addActionListener(new SubmitBook(fPenulis, dateChooser, fBookTitle, fSynopsis, genre, stok));
         }
 
-
+//        content.add(addGenre);
+        content.add(genre);
         content.add(stokTitle);
         content.add(stok);
+//        content.add(genres);
         content.add(genreTitle);
-        content.add(genre);
         content.add(date);
         content.add(dateChooser);
         content.add(penulis);

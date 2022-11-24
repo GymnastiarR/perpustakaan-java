@@ -9,7 +9,8 @@ import java.util.LinkedList;
 
 abstract public class Migration{
 
-  Statement stmt;
+  String test;
+  private Statement stmt;
 
   Migration (String tableName, LinkedList<Field> fields){
     tableBuilder();

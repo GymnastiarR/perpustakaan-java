@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 public class BookMigration extends Migration{
 
-    public static LinkedList<Field> fields = new LinkedList<>();
+    private static LinkedList<Field> fields = new LinkedList<>();
 
     BookMigration(){
         super("Books", fields);
@@ -13,6 +13,7 @@ public class BookMigration extends Migration{
 
     @Override
     public void tableBuilder() {
+        super.test = "La";
         Field bookName = new Field();
         bookName.name = "name";
         bookName.type = "varchar";
