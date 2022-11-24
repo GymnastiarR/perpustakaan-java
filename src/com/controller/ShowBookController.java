@@ -10,6 +10,7 @@ public class ShowBookController {
     static String title;
     static String synopsis;
     static String genre;
+    static String penulis;
 //    static String idBuku;
 
     public static JPanel display(String id){
@@ -21,11 +22,12 @@ public class ShowBookController {
                 title = rs.getString("name");
                 synopsis = rs.getString("synopsis");
                 genre = rs.getString("genre");
+                penulis = rs.getString("penulis");
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return view.display(title, synopsis, genre, id);
+        return view.display(title, synopsis, genre, penulis,id);
     }
 
 }

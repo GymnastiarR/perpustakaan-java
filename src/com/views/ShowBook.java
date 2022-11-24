@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.util.jar.JarEntry;
 
 public class ShowBook {
-    public JPanel display(String title, String synopsis, String genre, String id){
+    public JPanel display(String title, String synopsis, String genre, String penulis ,String id){
 
         JPanel content = new JPanel();
         content.setBounds(300, 40, 1620, 1080);
@@ -61,7 +61,7 @@ public class ShowBook {
         penulisLabel.setBounds(440, genreLabel.getY() + 40, 70, 18);
         penulisLabel.setFont(new Font("Poppins", Font.PLAIN, 14));
 
-        JLabel penulisBook = new JLabel("Gymnas");
+        JLabel penulisBook = new JLabel(penulis);
         penulisBook.setBounds(510, genreLabel.getY() + 40, 200, 18);
         penulisBook.setFont(new Font("Poppins", Font.PLAIN, 14));
 
